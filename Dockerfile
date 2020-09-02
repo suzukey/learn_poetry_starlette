@@ -1,18 +1,13 @@
-FROM python:3.8-slim as builder
+FROM python:3.8-slim
 
-WORKDIR /build
+WORKDIR /app
 RUN pip install poetry
 
-COPY learn/* ./learn/
-COPY poetry.lock pyproject.toml /build/
+COPY poetry.lock pyproject.toml ./
 
-RUN poetry build
+RUN poetry config virtualenvs.create false \
+  && poetry install
 
-# ------------------
+COPY learn/ .
 
-FROM python:3.8-slim
-WORKDIR /app
-COPY --from=builder /build/dist/learn-*-py3-none-any.whl .
-RUN pip install learn-*-py3-none-any.whl
-
-CMD ["uvicorn", "learn.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
