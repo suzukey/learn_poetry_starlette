@@ -8,6 +8,6 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry config virtualenvs.create false \
   && poetry install
 
-COPY learn/ .
+COPY learn learn
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "learn.main:app", "--host", "0.0.0.0", "--port", "80"]
