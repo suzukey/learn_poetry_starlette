@@ -1,10 +1,10 @@
 from starlette.routing import Route, Mount
 
-from learn.app.index import homepage, testjson
+from learn.app import index, json
 from learn.settings.directory import static
 
 routes = [
-    Route('/', endpoint=homepage),
-    Route('/json', endpoint=testjson),
+    Route('/', endpoint=index.Endpoint),
+    Route('/json', endpoint=json.Endpoint),
     Mount('/static', static, name='static')
 ]

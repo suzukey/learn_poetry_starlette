@@ -1,11 +1,8 @@
-from starlette.responses import JSONResponse
+from starlette.endpoints import HTTPEndpoint
 
 from learn.settings.directory import templates
 
 
-async def homepage(request):
-    return templates.TemplateResponse('index.html', {'request': request})
-
-
-async def testjson(request):
-    return JSONResponse({'test': 'hello'})
+class Endpoint(HTTPEndpoint):
+    async def get(self, request):
+        return templates.TemplateResponse('index.html', {'request': request})
